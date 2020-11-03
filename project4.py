@@ -39,7 +39,7 @@ print(countones(x))
 
 plt.figure(0)
 plt.scatter(y, x, 0.5)
-#plt.show()
+plt.show()
 
 
 
