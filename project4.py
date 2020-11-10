@@ -1,11 +1,10 @@
 # Title: EE 321 Project 4
 # Purpose: To complete project 4 of Dr. Mahesh Banavar's EE 321: Systems and Signal Processing project 4
 # Developers: Cameron Palmer, Shawn Boyd, Siddesh Sood
-# Last Modified: November 8th, 2020
+# Last Modified: November 10th, 2020
 
 import numpy as np
 import matplotlib.pyplot as plt
-import test_functions as tf
 
 # Constants
 N = 10000  # Number of symbols to be transmitted
@@ -66,16 +65,17 @@ for j in range(SNRLOW, SNRHIGH, SNRINC):
 
 print(error_probability)
 
-'''
+
 plt.figure(4)
-plt.scatter(range(SNRLOW, SNRHIGH, SNRINC), np.log10(error_probability))
+#plt.plot(range(SNRLOW, SNRHIGH, SNRINC), np.log10(error_probability))
+plt.semilogy(range(SNRLOW, SNRHIGH, SNRINC), error_probability)
 plt.xlabel("SNR")
 plt.ylabel("Log of Probability of error")
 plt.show()
 
 
 
-
+'''
 # Numeration constant for bits for graphing
 Y = np.arange(0, N, 1)
 
