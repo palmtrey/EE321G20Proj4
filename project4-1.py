@@ -5,10 +5,10 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
-import test_functions as tf
+import random as ran
 
 # Constants
-N = 10000  # Number of symbols to be transmitted
+N = 1000  # Number of symbols to be transmitted
 SNRLOW = -50  # Lower bound to vary SNR
 SNRHIGH = 50  # Upper bound to vary SNR
 SNRINC = 1  # Increment for SNR
@@ -21,8 +21,8 @@ first_val = A
 second_val = 0
 
 # Defining symbols to use
-t = [first_val, second_val, -first_val, second_val]
-r = [second_val, first_val, second_val, -first_val]
+t = [first_val, second_val, -first_val, second_val]  # t is x-axis
+r = [second_val, first_val, second_val, -first_val]  # r is y-axis
 
 # Deriving and sketching decision boundaries
 
@@ -86,8 +86,92 @@ plt.plot(x4, y4, "--")
 
 plt.plot(xp1, yp1)
 plt.plot(xp2, yp2)
+#plt.show()
+
+
+# Actually start calculations now
+
+generator = np.random.default_rng()  # Create a random number generator object
+
+# Create some data variables
+# snr =
+
+# Generates a number between 0 and 3, each corresponding to one point
+x = np.zeros(N)
+for i in np.arange(0, N):
+    x[i] = ran.randint(0, 3)
+
+print(x)
+
+# Plotting the generated data
+gen_data_x = np.zeros(N)
+gen_data_y = np.zeros(N)
+
+# Assign each value generated in x to a point
+for i in np.arange(0, N):
+    if x[i] == 0.:
+        gen_data_x[i] = first_val
+        gen_data_y[i] = second_val
+    elif x[i] == 1.:
+        gen_data_x[i] = second_val
+        gen_data_y[i] = first_val
+    elif x[i] == 2.:
+        gen_data_x[i] = -first_val
+        gen_data_y[i] = second_val
+    elif x[i] == 3.:
+        gen_data_x[i] = second_val
+        gen_data_y[i] = -first_val
+
+plt.figure(2)
+plt.scatter(gen_data_x, gen_data_y, 0.5)
+#plt.show()
+
+
+# Noise this shit up
+generator = np.random.default_rng()
+
+n_x = generator.normal(size=N) * np.sqrt(var_n)  # Zero-mean Gaussian noise with variance var_n
+n_y = generator.normal(size=N) * np.sqrt(var_n)
+
+# Received signal
+r_x = gen_data_x + n_x
+r_y = gen_data_y + n_y
+
+plt.figure(3)
+plt.scatter(r_x, r_y, 0.5)
 plt.show()
 
+'''
+# Receiver calculating interpreted signal
+interpreted_data = np.zeros(N)
+i = 0
+while True:
+    if r[i] > 0:
+        interpreted_data[i] = A * 2 - 1
+    else:
+        interpreted_data[i] = -1
 
+    i = i + 1
 
+    if i >= len(r):
+        break
+
+# Finding number of errors in the interpreted data
+num_errors = 0
+i = 0
+while True:
+    if interpreted_data[i] != x[i]:
+        num_errors = num_errors + 1
+
+    i = i + 1
+
+    if i >= len(r):
+        break
+
+#print("Number of errors: " + str(num_errors))
+
+error_probability[k] = num_errors/N
+
+#print("SNR is " + str(j) + "Db. r is " + str(r) + "\n\n\n")
+'''
 
