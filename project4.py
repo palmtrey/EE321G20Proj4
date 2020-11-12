@@ -7,17 +7,23 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 # Constants
-N = 10000  # Number of symbols to be transmitted
+N = 100000  # Number of symbols to be transmitted
 SNRLOW = -50  # Lower bound to vary SNR
 SNRHIGH = 50  # Upper bound to vary SNR
-SNRINC = 1  # Increment for SNR
+SNRINC = 0.5  # Increment for SNR
 var_n = 0.01   # Noise variance
 
-error_probability = np.zeros(len(range(SNRLOW, SNRHIGH, SNRINC)))
+error_probability = np.zeros(len(np.arange(SNRLOW, SNRHIGH, SNRINC)))
 
 k = 0
 
-for j in range(SNRLOW, SNRHIGH, SNRINC):
+for j in np.arange(SNRLOW, SNRHIGH, SNRINC):
+
+    # Skip j = 0
+    if j == 0:
+        j = j + SNRINC
+
+    print("Cycle: SNR = " + str(np.round(j, 2)))
 
     # Create a random number generator object
     generator = np.random.default_rng()
@@ -63,12 +69,11 @@ for j in range(SNRLOW, SNRHIGH, SNRINC):
 
     k = k + 1
 
-print(error_probability)
-
 
 plt.figure(4)
 #plt.plot(range(SNRLOW, SNRHIGH, SNRINC), np.log10(error_probability))
-plt.semilogy(range(SNRLOW, SNRHIGH, SNRINC), error_probability)
+plt.semilogy(np.arange(SNRLOW, SNRHIGH, SNRINC), error_probability)
+plt.title("Trial 1")
 plt.xlabel("SNR")
 plt.ylabel("Log of Probability of error")
 plt.show()
