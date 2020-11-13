@@ -1,7 +1,7 @@
-# Title: EE 321 Project 4: Multi-State Modulation
+# Title: EE 321 Project 4 - Trial 2
 # Purpose: To complete project 4 of Dr. Mahesh Banavar's EE 321: Systems and Signal Processing project 4
 # Developers: Cameron Palmer, Shawn Boyd, Siddesh Sood
-# Last Modified: November 10th, 2020
+# Last Modified: November 12th, 2020
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -104,9 +104,6 @@ for j in np.arange(SNRLOW, SNRHIGH, SNRINC):
     # Actually start calculations now
 
     generator = np.random.default_rng()  # Create a random number generator object
-
-    # Create some data variables
-    # snr =
 
     # Generates a number between 0 and 3, each corresponding to one point
     x = np.zeros(N)

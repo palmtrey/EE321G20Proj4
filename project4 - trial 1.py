@@ -1,4 +1,4 @@
-# Title: EE 321 Project 4
+# Title: EE 321 Project 4 - Trial 1
 # Purpose: To complete project 4 of Dr. Mahesh Banavar's EE 321: Systems and Signal Processing project 4
 # Developers: Cameron Palmer, Shawn Boyd, Siddesh Sood
 # Last Modified: November 10th, 2020
