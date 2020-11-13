@@ -1,7 +1,7 @@
 # Title: EE 321 Project 4 - Trial 2
 # Purpose: To complete project 4 of Dr. Mahesh Banavar's EE 321: Systems and Signal Processing project 4
 # Developers: Cameron Palmer, Shawn Boyd, Siddesh Sood
-# Last Modified: November 12th, 2020
+# Last Modified: November 13th, 2020
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -25,14 +25,13 @@ for j in np.arange(SNRLOW, SNRHIGH, SNRINC):
 
     print("Cycle: SNR = " + str(np.round(j, 2)))
 
-    A = np.sqrt(np.abs(j * var_n))  # THis value is directly related to the power of the system, and will be modified to find a graph of error vs SNR
+    A = np.sqrt(np.abs(j * var_n))  # This value is directly related to the power of the system, and will be modified to find a graph of error vs SNR
     first_val = A  # The first value of the symbols (in a scheme (A, 0), (0, A), (-A, 0), (0, -A), this will be A)
     second_val = 0  # The second value of the symbols (in a scheme (A, 0), (0, A), (-A, 0), (0, -A), this will be 0)
 
     # Defining symbols to use
     t = [first_val, second_val, -first_val, second_val]  # t is x-axis
     r = [second_val, first_val, second_val, -first_val]  # r is y-axis
-
 
     # Deriving and sketching decision boundaries
 
@@ -66,7 +65,6 @@ for j in np.arange(SNRLOW, SNRHIGH, SNRINC):
     x4 = np.arange(-first_val, 0 + 0.1, 0.1)
     y4 = m4*x4 + b4
 
-
     # Second, calculate the perpendicular lines bisecting the dashed lines
 
     PERP_RES = 0.01  # The resolution of the perpendicular lines. Crank this way down when doing final simulations
@@ -88,22 +86,6 @@ for j in np.arange(SNRLOW, SNRHIGH, SNRINC):
 
     xp2 = np.arange(-first_val - var_n*10, first_val + PERP_RES + var_n*10, PERP_RES)
     yp2 = mp2*xp2 + bp2
-
-    #plt.figure(0)
-    #plt.scatter(t, r)
-    #plt.plot(x1, y1, "--")
-    #plt.plot(x2, y2, "--")
-    #plt.plot(x3, y3, "--")
-    #plt.plot(x4, y4, "--")
-
-    #plt.plot(xp1, yp1)
-    #plt.plot(xp2, yp2)
-    #plt.show()
-
-
-    # Actually start calculations now
-
-    generator = np.random.default_rng()  # Create a random number generator object
 
     # Generates a number between 0 and 3, each corresponding to one point
     x = np.zeros(N)
@@ -129,12 +111,7 @@ for j in np.arange(SNRLOW, SNRHIGH, SNRINC):
             gen_data_x[i] = second_val
             gen_data_y[i] = -first_val
 
-    #plt.figure(2)
-    #plt.scatter(gen_data_x, gen_data_y, 0.5)
-    #plt.show()
-
-
-    # Noise this shit up
+    # Add some noise
     generator = np.random.default_rng()
 
     n_x = generator.normal(size=N) * np.sqrt(var_n)  # Zero-mean Gaussian noise with variance var_n
@@ -144,18 +121,12 @@ for j in np.arange(SNRLOW, SNRHIGH, SNRINC):
     r_x = gen_data_x + n_x
     r_y = gen_data_y + n_y
 
-    #plt.figure(3)
-    #plt.scatter(r_x, r_y, 0.5)
-    #plt.show()
-
-
     # Receiver de-noising signal to the best of its ability
     rec_data_x = np.zeros(N)
     rec_data_y = np.zeros(N)
 
     # Decision algorithm
     ROUND_VAL = 2
-    #print(xp1)
 
     xp1_float = np.zeros(len(xp1))  # Initialize arrays to store xp1, xp2, yp1, and yp2, as rounded floats
     xp2_float = np.zeros(len(xp2))
@@ -170,7 +141,6 @@ for j in np.arange(SNRLOW, SNRHIGH, SNRINC):
     for i in np.arange(0, len(yp1)):
         yp1_float[i] = np.round(float(yp1[i]), ROUND_VAL)
         yp2_float[i] = np.round(float(yp2[i]), ROUND_VAL)
-
 
     # Determine which area each point falls into based on the algorithm
     for i in np.arange(0, N):
@@ -207,12 +177,6 @@ for j in np.arange(SNRLOW, SNRHIGH, SNRINC):
             rec_data_x[i] = -first_val
             rec_data_y[i] = second_val
 
-    # Graph the received, de-noised data
-    #plt.figure(4)
-    #plt.scatter(rec_data_x, rec_data_y)
-    #plt.show()
-
-
     # Finding number of errors in the interpreted data
     num_errors = 0
     i = 0  # Iterator
@@ -236,7 +200,6 @@ for j in np.arange(SNRLOW, SNRHIGH, SNRINC):
 
 
 plt.figure(6)
-#plt.plot(range(SNRLOW, SNRHIGH, SNRINC), error_probability)
 plt.semilogy(np.arange(SNRLOW, SNRHIGH, SNRINC), error_probability)
 plt.title("Trial 2")
 plt.xlabel("SNR")
